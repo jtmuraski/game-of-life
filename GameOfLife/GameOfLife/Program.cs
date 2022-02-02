@@ -82,10 +82,49 @@ namespace GameOfLife
                     Console.WriteLine("You did not enter a valid integer value. Enter a integer value and try again", Color.DarkRed);
             }
 
+            Console.Clear();
+            Console.WriteLine("Generating board...");
             Simulation board = new Simulation(boardHeight, boardWidth, numGenerations);
+            if(board == null)
+            {
+                Console.WriteLine("Sorry, there was an unexpected error that occured. Press enter to return to exit the application");
+                return false;
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Current Generation: " + board.CurrentGeneration);
+            Console.WriteLine("Live Cells:" + board.LiveCellCount());
+            Console.WriteLine("Dead Cells: " + board.DeadCellCount());
             Console.WriteLine(board.PrintBoard());
-            Console.ReadLine();
-            return true;
+            Console.WriteLine("Do you wish to run the simulation with this setup? (Yes / No)  ");
+            string answer = Console.ReadLine();
+            if (answer.ToLower() == "yes" || answer.ToLower() == "y")
+            {
+                ExecuteSimulation(board);
+                return true;
+            }
+            else
+            {
+                return true;
+            }                
+        }
+
+         public static void ExecuteSimulation(Simulation board)
+        {
+            bool runSim = true;
+            do
+            {
+                Console.Clear();
+                board.NextGeneration();
+                Console.WriteLine("Current Generation: " + board.CurrentGeneration);
+                Console.WriteLine("Live Cells:" + board.LiveCellCount());
+                Console.WriteLine("Dead Cells: " + board.DeadCellCount());
+                Console.WriteLine(board.PrintBoard());
+                Console.WriteLine("Continue? (Yes/No");
+                string answer = Console.ReadLine();
+                if (answer.ToLower() == "no" | answer.ToLower() == "n")
+                    runSim = false;
+            } while (board.CurrentGeneration < board.MaxGenerations || !runSim);
         }
     }
 }
