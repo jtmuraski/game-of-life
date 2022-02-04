@@ -24,6 +24,7 @@ namespace GameOfLife
             do
             {
                 // Display the menu for the application
+                Console.Clear();
                 Console.WriteAscii("Game Of Life", Color.DarkGreen);
                 Console.WriteLine();
                 Console.WriteLine("Welcome to the Game Of Life simulation, my take on Conway's Game Of Life simulation");
@@ -123,8 +124,13 @@ namespace GameOfLife
                 Console.WriteLine("Continue? (Yes/No");
                 string answer = Console.ReadLine();
                 if (answer.ToLower() == "no" | answer.ToLower() == "n")
+                {
+                    Console.WriteLine("Exiting this simulation run...");
+                    Console.WriteLine("Press enter to return to the main menu");
                     runSim = false;
-            } while (board.CurrentGeneration < board.MaxGenerations || !runSim);
+                }    
+            } while (runSim);
+            return;
         }
     }
 }

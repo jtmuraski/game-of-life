@@ -132,9 +132,10 @@ namespace GameOfLife.Models
                 {
                     int livingNeighbors = 0;
                     //cycle through the values around the current cell
+                    #region CornerCheck
                     //Check if we are working on a corner
                     // Upper left
-                    if(x == 0 && y == 0)
+                    if (x == 0 && y == 0)
                     {
                         livingNeighbors += Board[x + 1, y];
                         livingNeighbors += Board[x + 1, y + 1];
@@ -143,12 +144,12 @@ namespace GameOfLife.Models
                     // Upper Right
                     else if (x == 0 && y == (_width - 1))
                     {
-                        livingNeighbors += Board[x , y - 1];
+                        livingNeighbors += Board[x, y - 1];
                         livingNeighbors += Board[x + 1, y - 1];
                         livingNeighbors += Board[x + 1, y];
                     }
                     // Lower Left
-                    else if (x == (_height  - 1) && y == 0)
+                    else if (x == (_height - 1) && y == 0)
                     {
                         livingNeighbors += Board[x - 1, y];
                         livingNeighbors += Board[x, y + 1];
@@ -161,55 +162,66 @@ namespace GameOfLife.Models
                         livingNeighbors += Board[x - 1, y - 1];
                         livingNeighbors += Board[x, y - 1];
                     }
-                    // Now check if we are working an edge
-                    // Top Edge
-                    else if(x == 0)
+                    #endregion
+                    #region Edges
+                    // There are 4 special case arrays - the first array and the last array, y == 0 and when y == _width
+                    // First Array
+                    else if (x == 0)
                     {
-                        for(int a = 0; a <= 1; a++)
+                        for (int a = 0; a <= 1; a++)
                         {
-                            for(int b = -1; b < 1; b++)
+                            for (int b = -1; b <= 1; b++)
                             {
-                                if(b != 0 && a != 0)
+                                if (a == 0 && b == 0)
+                                    livingNeighbors += 0;
+                                else
                                     livingNeighbors += Board[x + a, y + b];
                             }
                         }
                     }
-                    // Bottom edge
-                    else if(x == (_height -1))
+                    // Last Array
+                    else if (x == (_height - 1))
                     {
                         for (int a = -1; a <= 0; a++)
                         {
-                            for (int b = -1; b < 1; b++)
+                            for (int b = -1; b <= 1; b++)
                             {
-                                if (b != 0 && a != 0)
+                                if (a == 0 && b == 0)
+                                    livingNeighbors += 0;
+                                else
                                     livingNeighbors += Board[x + a, y + b];
                             }
                         }
                     }
-                    // Left edge
+                    // y == 0
                     else if(y == 0)
                     {
-                        for (int a = -1; a <= 1; a++)
+                        for(int a = -1; a <= 1; a++)
                         {
-                            for (int b = 0; b <= 1; b++)
+                            for(int b = 0; b <= 1; b++)
                             {
-                                if (b != 0 && a != 0)
+                                if (a == 0 && b == 0)
+                                    livingNeighbors += 0;
+                                else
                                     livingNeighbors += Board[x + a, y + b];
                             }
                         }
                     }
-                    // Right Edge
+                    // y == _width
                     else if(y == (_width - 1))
                     {
-                        for (int a = -1; a <= 1; a++)
+                        for(int a = -1; a <= 1; a++)
                         {
-                            for (int b = -1; b <= 0; b++)
+                            for(int b = -1; b <= 0; b++)
                             {
-                                if (b != 0 && a != 0)
+                                if (a == 0 && b == 0)
+                                    livingNeighbors += 0;
+                                else
                                     livingNeighbors += Board[x + a, y + b];
                             }
                         }
                     }
+                    #endregion
                     // The middel cells
                     else
                     {
@@ -217,7 +229,9 @@ namespace GameOfLife.Models
                         {
                             for (int b = -1; b <= 1; b++)
                             {
-                                if (b != 0 && a != 0)
+                                if (a == 0 && b == 0)
+                                    livingNeighbors += 0;
+                                else
                                     livingNeighbors += Board[x + a, y + b];
                             }
                         }
@@ -225,12 +239,13 @@ namespace GameOfLife.Models
 
                     if (livingNeighbors < 2)
                         newBoard[x, y] = 0;
-                    else if (Board[x, y] == 1 && (livingNeighbors == 2 || livingNeighbors == 3))
+                    else if (Board[x, y] == 0 && livingNeighbors == 3)
+                        newBoard[x, y] = 1;
+                    else if (livingNeighbors == 2 || livingNeighbors == 3)
                         newBoard[x, y] = Board[x, y];
                     else if (livingNeighbors > 3)
                         newBoard[x, y] = 0;
-                    else if (Board[x, y] == 0 && livingNeighbors == 3)
-                        newBoard[x, y] = 1;
+                    
                 }
             }
             Board = newBoard;
