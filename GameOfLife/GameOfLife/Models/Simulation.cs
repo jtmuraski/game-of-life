@@ -76,6 +76,7 @@ namespace GameOfLife.Models
             _height = board.Height;
             _width = board.Width;
             _numGenerations = board.NumGenerations;
+            _board = new int[_height, _width];
             foreach (var cell in board.Board)
             {
                 _board[cell.XPosition, cell.YPosition] = cell.Value;
