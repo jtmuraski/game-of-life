@@ -105,7 +105,11 @@ namespace GameOfLife
             Console.WriteLine("Current Generation: " + board.CurrentGeneration);
             Console.WriteLine("Live Cells:" + board.LiveCellCount());
             Console.WriteLine("Dead Cells: " + board.DeadCellCount());
-            Console.WriteLine(board.PrintBoard());
+            // Stylesheet for console colors
+            StyleSheet styleSheet = new StyleSheet(Color.Green);
+            styleSheet.AddStyle("0", Color.Red);
+            styleSheet.AddStyle("1", Color.Blue);
+            Console.WriteLineStyled(board.PrintBoard(), styleSheet);
             Console.WriteLine();
             Console.WriteLine("Do you wish to save these set up options and starting board (Yes / No)?");
             bool validSave = false;
@@ -157,7 +161,11 @@ namespace GameOfLife
                 Console.WriteLine("Current Generation: " + board.CurrentGeneration);
                 Console.WriteLine("Live Cells:" + board.LiveCellCount());
                 Console.WriteLine("Dead Cells: " + board.DeadCellCount());
-                Console.WriteLine(board.PrintBoard());
+                // Stylesheet for console colors
+                StyleSheet styleSheet = new StyleSheet(Color.Green);
+                styleSheet.AddStyle("0", Color.Red);
+                styleSheet.AddStyle("1", Color.Blue);
+                Console.WriteLineStyled(board.PrintBoard(), styleSheet);
                 if(board.CurrentGeneration == board.NumGenerations)
                 {
                     Console.WriteLine("The Simulation is complete. Press any key to return to the main menu");
@@ -233,7 +241,11 @@ namespace GameOfLife
             Console.WriteLine("Generation to Simulate: " + board.NumGenerations);
             Console.WriteLine("Live Cells:" + board.LiveCellCount());
             Console.WriteLine("Dead Cells: " + board.DeadCellCount());
-            Console.WriteLine(board.PrintBoard());
+            // Stylesheet for console colors
+            StyleSheet styleSheet = new StyleSheet(Color.Green);
+            styleSheet.AddStyle("0", Color.Red);
+            styleSheet.AddStyle("1", Color.Blue);
+            Console.WriteLineStyled(board.PrintBoard(), styleSheet);
             Console.WriteLine();
             Console.WriteLine("Do you wish to run the simulation with this setup? (Yes / No)  ");
             string simulate = Console.ReadLine();
