@@ -158,14 +158,23 @@ namespace GameOfLife
                 Console.WriteLine("Live Cells:" + board.LiveCellCount());
                 Console.WriteLine("Dead Cells: " + board.DeadCellCount());
                 Console.WriteLine(board.PrintBoard());
-                Console.WriteLine("Continue? (Yes/No");
-                string answer = Console.ReadLine();
-                if (answer.ToLower() == "no" | answer.ToLower() == "n")
+                if(board.CurrentGeneration == board.NumGenerations)
                 {
-                    Console.WriteLine("Exiting this simulation run...");
-                    Console.WriteLine("Press enter to return to the main menu");
+                    Console.WriteLine("The Simulation is complete. Press any key to return to the main menu");
+                    Console.ReadLine();
                     runSim = false;
-                }    
+                }
+                else
+                {
+                    Console.WriteLine("Continue? (Yes/No");
+                    string answer = Console.ReadLine();
+                    if (answer.ToLower() == "no" | answer.ToLower() == "n")
+                    {
+                        Console.WriteLine("Exiting this simulation run...");
+                        Console.WriteLine("Press enter to return to the main menu");
+                        runSim = false;
+                    }
+                }  
             } while (runSim);
             return;
         }
@@ -235,7 +244,7 @@ namespace GameOfLife
             }
             else
             {
-                return false;
+                return true;
             }
         }
     }
