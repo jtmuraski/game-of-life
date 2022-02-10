@@ -1,0 +1,17 @@
+Welcome to the Game of Life!
+
+This is a take on the Conway's Game Of Life that is designed to simulate the life and death of multiple generations of cells that are in one of two states:
+Alive (represted by a 1) or Dead (represented by a 0). Whether a cell lives or dies in a generation is goverend by the following rules:
+
+1) Any live cell with fewer than two live neighbors dies as if caused by under-population.
+2) Any live cell with two or three live neighbors lives on to the next generation.
+3) Any live cell with more than three live neighbors dies, as if by over-population.
+4) Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+
+Instructions
+
+1) From the Main Menu, type in '2' and hit enter
+2) Enter the dimensions for the game board you want to simulate
+3) Enter the number of genreations that you want to simulate
+4) The board with you given dimensions will be generated and randomly seeded with live and dead cells.
+5) Follow the on screen instructions and see the results of the little universe you just genreated!

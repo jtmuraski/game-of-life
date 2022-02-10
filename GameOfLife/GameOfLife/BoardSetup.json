@@ -1,0 +1,105 @@
+{
+  "Id": 0,
+  "Name": "testrun",
+  "Height": 4,
+  "Width": 4,
+  "NumGenerations": 5,
+  "Board": [
+    {
+      "Id": 0,
+      "XPosition": 0,
+      "YPosition": 0,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 0,
+      "YPosition": 1,
+      "Value": 1
+    },
+    {
+      "Id": 0,
+      "XPosition": 0,
+      "YPosition": 2,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 0,
+      "YPosition": 3,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 1,
+      "YPosition": 0,
+      "Value": 1
+    },
+    {
+      "Id": 0,
+      "XPosition": 1,
+      "YPosition": 1,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 1,
+      "YPosition": 2,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 1,
+      "YPosition": 3,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 2,
+      "YPosition": 0,
+      "Value": 1
+    },
+    {
+      "Id": 0,
+      "XPosition": 2,
+      "YPosition": 1,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 2,
+      "YPosition": 2,
+      "Value": 1
+    },
+    {
+      "Id": 0,
+      "XPosition": 2,
+      "YPosition": 3,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 3,
+      "YPosition": 0,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 3,
+      "YPosition": 1,
+      "Value": 1
+    },
+    {
+      "Id": 0,
+      "XPosition": 3,
+      "YPosition": 2,
+      "Value": 0
+    },
+    {
+      "Id": 0,
+      "XPosition": 3,
+      "YPosition": 3,
+      "Value": 0
+    }
+  ]
+}

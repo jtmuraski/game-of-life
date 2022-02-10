@@ -9,13 +9,30 @@ namespace GameOfLife.Models
     public class Simulation
     {
         // class fields
-        private int[,] Board { get; set; }
+        private int[,] _board { get; set; }
         private int _height { get; set; }
         private int _width { get; set; }
         private int _numGenerations { get; set; }
         private int _currentGeneration { get; set; }
 
         // class Properties
+        public int Height
+        {
+            get { return _height; }
+        }
+        public int Width
+        {
+            get { return _width; }
+        }
+        public int NumGenerations
+        {
+            get { return _numGenerations; }
+        }
+        public int[,] Board
+        {
+            get { return _board; }
+        }
+
         public int CurrentGeneration
         {
             get { return _currentGeneration; }
@@ -31,14 +48,37 @@ namespace GameOfLife.Models
             _width = width;
             _numGenerations = numGenerations;
             _currentGeneration = 0;
-            Board = new int[height, width];
+            _board = new int[height, width];
             var random = new Random();
             for (int i = 0; i < height; i++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    Board[i, x] = random.Next(0, 2);
+                    _board[i, x] = random.Next(0, 2);
                 }
+            }
+        }
+
+        public Simulation(SimSetup setup)
+        {
+            _height = setup.Height;
+            _width = setup.Width;
+            _numGenerations = setup.NumGenerations;
+            _currentGeneration = 0;
+            foreach(var position in setup.Board)
+            {
+                _board[position.XPosition, position.YPosition] = position.Value;
+            }
+        }
+
+        public Simulation(Rootobject board)
+        {
+            _height = board.Height;
+            _width = board.Width;
+            _numGenerations = board.NumGenerations;
+            foreach (var cell in board.Board)
+            {
+                _board[cell.XPosition, cell.YPosition] = cell.Value;
             }
         }
 
@@ -175,7 +215,7 @@ namespace GameOfLife.Models
                                 if (a == 0 && b == 0)
                                     livingNeighbors += 0;
                                 else
-                                    livingNeighbors += Board[x + a, y + b];
+                                    livingNeighbors += _board[x + a, y + b];
                             }
                         }
                     }
@@ -189,7 +229,7 @@ namespace GameOfLife.Models
                                 if (a == 0 && b == 0)
                                     livingNeighbors += 0;
                                 else
-                                    livingNeighbors += Board[x + a, y + b];
+                                    livingNeighbors += _board[x + a, y + b];
                             }
                         }
                     }
@@ -203,7 +243,7 @@ namespace GameOfLife.Models
                                 if (a == 0 && b == 0)
                                     livingNeighbors += 0;
                                 else
-                                    livingNeighbors += Board[x + a, y + b];
+                                    livingNeighbors += _board[x + a, y + b];
                             }
                         }
                     }
@@ -217,7 +257,7 @@ namespace GameOfLife.Models
                                 if (a == 0 && b == 0)
                                     livingNeighbors += 0;
                                 else
-                                    livingNeighbors += Board[x + a, y + b];
+                                    livingNeighbors += _board[x + a, y + b];
                             }
                         }
                     }
@@ -232,23 +272,23 @@ namespace GameOfLife.Models
                                 if (a == 0 && b == 0)
                                     livingNeighbors += 0;
                                 else
-                                    livingNeighbors += Board[x + a, y + b];
+                                    livingNeighbors += _board[x + a, y + b];
                             }
                         }
                     }
 
                     if (livingNeighbors < 2)
                         newBoard[x, y] = 0;
-                    else if (Board[x, y] == 0 && livingNeighbors == 3)
+                    else if (_board[x, y] == 0 && livingNeighbors == 3)
                         newBoard[x, y] = 1;
                     else if (livingNeighbors == 2 || livingNeighbors == 3)
-                        newBoard[x, y] = Board[x, y];
+                        newBoard[x, y] = _board[x, y];
                     else if (livingNeighbors > 3)
                         newBoard[x, y] = 0;
                     
                 }
             }
-            Board = newBoard;
+            _board = newBoard;
             _currentGeneration++;
             return;
         }

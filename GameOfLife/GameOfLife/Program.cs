@@ -3,6 +3,9 @@ using System.Drawing;
 using Console = Colorful.Console;
 using Colorful;
 using GameOfLife.Models;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 // Author: John Muraski
 // Description: This is my take of the Conway Game Of Life as a coding challenge
@@ -31,13 +34,19 @@ namespace GameOfLife
                 Console.WriteLine("Choose from one of the options below to continue");
                 Console.WriteLine("1. View Descripiton and Simulation Rules", Color.Blue);
                 Console.WriteLine("2. Setup and begin a new simulation", Color.Blue);
-                Console.WriteLine("3. Load a previous simulation set up", Color.Blue);
+                Console.WriteLine("3. Load previous saved setup", Color.Blue);
                 Console.WriteLine("4. Exit", Color.Red);
                 string choice = Console.ReadLine();
                 switch(choice)
                 {
+                    case ("1"):
+                        DisplayInstructions();
+                        break;
                     case ("2"):
                         runApp = SetUpSim();
+                        break;
+                    case ("3"):
+                        runApp = UseLastSetup();
                         break;
                     case ("4"):
                         runApp = false;
@@ -97,6 +106,34 @@ namespace GameOfLife
             Console.WriteLine("Live Cells:" + board.LiveCellCount());
             Console.WriteLine("Dead Cells: " + board.DeadCellCount());
             Console.WriteLine(board.PrintBoard());
+            Console.WriteLine();
+            Console.WriteLine("Do you wish to save these set up options and starting board (Yes / No)?");
+            bool validSave = false;
+            while(!validSave)
+            {
+                string save = Console.ReadLine();
+                if (save.ToLower() == "yes" || save.ToLower() == "y")
+                {
+                    bool saveSuccess = SaveSetup(board);
+                    if (saveSuccess)
+                    {
+                        Console.WriteLine("Setup saved!");
+                        validSave = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unfortunatly the setup was unable to be saved. Please exit and try again, or continue the simulation. Press any key to continue.");
+                        Console.ReadLine();
+                        validSave = true;
+                    }
+                }
+                else if (save.ToLower() == "no" || save.ToLower() == "n")
+                    validSave = true;
+                else
+                    Console.WriteLine("You did not enter a valid choice. PLease enter either yes or no");                   
+
+            }
+            
             Console.WriteLine("Do you wish to run the simulation with this setup? (Yes / No)  ");
             string answer = Console.ReadLine();
             if (answer.ToLower() == "yes" || answer.ToLower() == "y")
@@ -110,7 +147,7 @@ namespace GameOfLife
             }                
         }
 
-         public static void ExecuteSimulation(Simulation board)
+        public static void ExecuteSimulation(Simulation board)
         {
             bool runSim = true;
             do
@@ -131,6 +168,75 @@ namespace GameOfLife
                 }    
             } while (runSim);
             return;
+        }
+        public static void DisplayInstructions()
+        {
+            Console.Clear();
+            string[] doc = File.ReadAllLines("..\\..\\..\\Instructions.txt"); // Need to figure out the relative path for this
+            int count = 0;
+            foreach(string line in doc)
+            {
+                if(count == 0)
+                {
+                    Console.WriteAscii(line, Color.Green);
+                }
+                else if (line == "Instructions")
+                    Console.WriteLine(line, Color.Cyan);
+                else
+                    Console.WriteLine(line);
+
+                count++;
+            }
+            Console.WriteLine();
+            Console.WriteLine("Press any key to return to the main menu");
+            Console.ReadLine();
+            return;
+        }
+        public static bool SaveSetup(Simulation board)
+        {
+            Console.WriteLine("PLease enter a name for this Simulation Board: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Saving board " + name + "...");
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            SimSetup setup = new SimSetup(board, name);
+            string json = JsonSerializer.Serialize<SimSetup>(setup, options);
+            string fileName = "..\\..\\..\\BoardSetup.json";
+            File.WriteAllText(fileName, json);
+            return true;
+        }
+        public static bool UseLastSetup()
+        {
+            Console.Clear();
+            string fileName = "..\\..\\..\\BoardSetup.json";
+            string jsonString = File.ReadAllText(fileName);
+            var previousSetup = JsonSerializer.Deserialize<Rootobject>(jsonString);
+            Console.WriteLine("Loading previous setup...");
+            Console.WriteLine("Generating board...");
+            var board = new Simulation(previousSetup);
+            if (board == null)
+            {
+                Console.WriteLine("Sorry, there was an unexpected error that occured. Press enter to return to exit the application");
+                return false;
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Current Generation: " + board.CurrentGeneration);
+            Console.WriteLine("Generation to Simulate: " + board.NumGenerations);
+            Console.WriteLine("Live Cells:" + board.LiveCellCount());
+            Console.WriteLine("Dead Cells: " + board.DeadCellCount());
+            Console.WriteLine(board.PrintBoard());
+            Console.WriteLine();
+            Console.WriteLine("Do you wish to run the simulation with this setup? (Yes / No)  ");
+            string simulate = Console.ReadLine();
+            if (simulate.ToLower() == "yes" || simulate.ToLower() == "y")
+            {
+                ExecuteSimulation(board);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
