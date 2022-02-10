@@ -9,4 +9,6 @@ This application is my personal take on the Conway Game Of Life challenge. For t
 I worked on this project in order to practice algorithms and working with data structures, and quite simply because I have never heard of this until a couple of days ago and wanted to try solving it. This application is writtern purely as a C# console app.
 
 ---
+### Planned Updates
 
+There are currently no more planned updates to this application unless a new bug is discovered.
