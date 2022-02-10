@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
+using Colorful;
+using System.Drawing;
 
 namespace GameOfLife.Models
 {
@@ -86,6 +89,7 @@ namespace GameOfLife.Models
         // Return a String that contains a printout of the board
         public string PrintBoard()
         {
+            
             // Set up strings for the borders and empty spaces within the baord
             StringBuilder board = new StringBuilder();
             string topper = "";
